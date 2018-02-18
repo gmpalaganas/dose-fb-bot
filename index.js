@@ -22,14 +22,19 @@ app.post('/webhook', (req, res) => {
 
     let body = req.body;
 
-    if(body.object == 'page'){
+    if(body.object === 'page'){
 
-        body.entry.forEach(entry => {
+        body.entry.forEach( (entry) => {
 
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
 
-        });
+            let sender_psid = webhook_event.sender.id;
+            console.log('Sender ID:' + sender_psid);
+
+            if(webhook_event.message){
+                console.log("HERE");
+                handleMessage(sender_psid, webhook_event.message);
 
         res.status(200).send('EVENT_RECEIVED');
 
@@ -44,36 +49,29 @@ app.get('/webhook', (req, res) => {
 
     const VERIFY_TOKEN = "RVhQTE9TMU9OISEh";
 
-    let body = req.body;
+    let mode = req.query['hub.mode'];
+    let token = req.query['hub.verify_token'];
+    let challenge = req.query['hub.challenge'];
 
-    if(body.object === 'page'){
+    // Check if a token and mode were sent
+    if (mode && token) {
 
-        body.entry.forEach( (entry) => {
+        // Check the mode and token sent are correct
+        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
 
-            let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
+            // Respond with 200 OK and challenge token from the request
+            console.log('WEBHOOK_VERIFIED');
+            res.status(200).send(challenge);
 
-            let sender_psid = webhook_event.sender.id;
-            console.log('Sender ID:' + sender_psid);
-
-            if(webhook_event.message){
-                console.log("HERE");
-                handleMessage(sender_psid, webhook_event.message);
-            }
-
-        });
-
-        res.status(200).send('EVENT_RECEIVED');
-    
-    } else{
-
-        res.sendStatus(404);
+        } else {
+            // Responds with '403 Forbidden' if verify tokens do not match
+            res.sendStatus(403);      
+        }
     }
-
 });
 
 
-function handleMessage(sender_psid, message) {
+        function handleMessage(sender_psid, message) {
 
     let response;
 
