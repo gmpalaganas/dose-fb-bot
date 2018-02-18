@@ -75,6 +75,7 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, message) {
 
     let response;
+    console.log(message);
 
     if(message.text){
         response = {
