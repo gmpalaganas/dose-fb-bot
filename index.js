@@ -34,19 +34,21 @@ app.post('/webhook', (req, res) => {
 
             if(webhook_event.message){
                 console.log("HERE");
-            handleMessage(sender_psid, webhook_event.message);
+                handleMessage(sender_psid, webhook_event.message);
 
+            }
 
         });
 
         res.status(200).send('EVENT_RECEIVED');
 
-        } else{
+    } else{
 
-            res.sendStatus(404);
-        }
+        res.sendStatus(404);
+    }
 
-    });
+
+});
 
 app.get('/webhook', (req, res) => {
 
