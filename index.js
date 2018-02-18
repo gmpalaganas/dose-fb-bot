@@ -4,11 +4,13 @@ const
     express = require('express'),
     body_parser = require('body-parser'),
     request = require('request'),
-    app = express().use(body_parser.json());
+    app = express();
 
-app.use(body_parser.urlencoded({extended: false;}));
 
 app.listen(process.env.PORT || 8888, () => console.log('webhook is listening'));
+
+app.use(body_parser.urlencoded({extended: false;}));
+app.use(body_parser.json());
 
 app.get('/', (req, res) => {
     res.send("Hello I'm Jemma");
