@@ -42,20 +42,43 @@ app.get('/webhook', (req, res) => {
 
     const VERIFY_TOKEN = "RVhQTE9TMU9OISEh";
 
-    let mode = req.query['hub.mode'];
-    let token = req.query['hub.verify_token'];
-    let challenge = req.query['hub.challenge'];
+    let body = req.body;
 
-    if(mode && token){
+    if(body.object === 'page'){
 
-        if(mode === 'subscribe' && token === VERIFY_TOKEN){
+        body.entry.forEach( (entry) => {
 
-            console.log('WEBHOOK_VERIFIED');
-            res.status(200).send(challenge);
+            let webhook_event = entry.messaging[0];
+            console.log(webhook_event);
 
-        } else{
+            let sender_psid = webhook_event.sender.id;
+            console.log('Sender ID:' + sender_psid);
 
-            res.sendStatus(403);
+            if(webhook_event.message){
+                handleMessage(sender_psid, webhook_event.message);
+            }
+
+        });
+
+        res.status(200).send('EVENT_RECEIVED');
+    
+    } else{
+
+        res.sendStatus(404);
+    }
+
+});
+
+
+function handleMessage(sender_psid, message) {
+
+    let response;
+
+    if(message.text){
+        response = {
+            "text" : "You sent a message!"
         }
     }
-});
+
+    callSendAPI(sender_psid, response);
+}
