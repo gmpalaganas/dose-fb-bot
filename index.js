@@ -8,6 +8,10 @@ const
 
 app.listen(process.env.PORT || 8888, () => console.log('webhook is listening'));
 
+app.get('/', (req, res) => {
+    res.send("Hello I'm Jemma");
+});
+
 app.post('/webhook', (req, res) => {
 
     let body = req.body;
