@@ -6,6 +6,8 @@ const
     request = require('request'),
     app = express().use(body_parser.json());
 
+app.use(body_parser.urlencoded({extended: false;}));
+
 app.listen(process.env.PORT || 8888, () => console.log('webhook is listening'));
 
 app.get('/', (req, res) => {
