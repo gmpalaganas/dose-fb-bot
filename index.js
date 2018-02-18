@@ -57,6 +57,7 @@ app.get('/webhook', (req, res) => {
             console.log('Sender ID:' + sender_psid);
 
             if(webhook_event.message){
+                console.log("HERE");
                 handleMessage(sender_psid, webhook_event.message);
             }
 
@@ -75,7 +76,6 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, message) {
 
     let response;
-    console.log(message);
 
     if(message.text){
         response = {
