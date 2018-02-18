@@ -1,0 +1,30 @@
+{
+  "name": "dose-fb-bot",
+  "version": "1.0.0",
+  "description": "Dose FB group chat bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmpalaganas/dose-fb-bot.git"
+  },
+  "keywords": [
+    "messenger",
+    "bot"
+  ],
+  "author": "Genesis Ian M. Palaganas",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gmpalaganas/dose-fb-bot/issues"
+  },
+  "homepage": "https://github.com/gmpalaganas/dose-fb-bot#readme",
+  "dependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "parser": "^0.1.4",
+    "request": "^2.83.0"
+  }
+}
